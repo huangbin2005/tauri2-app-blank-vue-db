@@ -14,11 +14,35 @@
       {
         "title": "tauri2-app-blank-vue-db",
         "width": 800,
-        "height": 600
+        "height": 600,
+        "center": true,
+        "decorations": true,
+        "transparent": true,
+        "shadow": true,
+        "dragDropEnabled": true,
+        "visible": true
       }
     ],
     "security": {
       "csp": null
+    },
+    "withGlobalTauri": false
+  },
+  "plugins": {
+    "fs": {
+      "readFile": true,
+      "writeFile": true,
+      "readDir": true,
+      "copyFile": true,
+      "createDir": true,
+      "removeDir": true,
+      "removeFile": true,
+      "renameFile": true,
+      "exists": true,
+      "scope": ["*"] 
+    },
+    "sql": {
+      "preload": ["sqlite:Chinook.db"]
     }
   },
   "bundle": {

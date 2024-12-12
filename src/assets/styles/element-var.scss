@@ -1,0 +1,37 @@
+/**
+  自定义主题变量element-var.scss
+*/
+
+// 通过 SCSS 变量
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+  'primary': (
+  'base': #165dff,
+),
+'success': (
+  'base': #00b42a,
+  ),
+  'warning': (
+  'base': #ff7d00,
+),
+'danger': (
+  'base': #f53f3f,
+),
+'info': (
+  'base': #A9AEB8,
+)
+),
+);
+
+// 导入element-plus所有样式
+@use "element-plus/theme-chalk/src/index.scss" as *;
+// 通过 CSS 变量
+/* :root {
+  --el-color-primary: #165dff;
+  --el-color-primary-light-3: #9969ec;
+  --el-color-primary-light-5: #ad87ee;
+  --el-color-primary-light-7: #c2a9ee;
+  --el-color-primary-light-8: #dbcef1;
+  --el-color-primary-light-9: #f1ebfa;
+  --el-color-primary-dark-2: #6d2ddb;
+} */
