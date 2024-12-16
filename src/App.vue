@@ -198,7 +198,6 @@ const handleSubmit = () => {
     </el-drawer>   
     <el-button type="success"  round @click="handleAddEdit">新增</el-button>
     <el-button type="success" round @click="fetchData">查询数据库</el-button>
-
     <!-- 表格 -->
     <el-table
       :data="multipleTables.list"
@@ -209,7 +208,6 @@ const handleSubmit = () => {
       @selection-change="handleSelectionRows"
       max-height="450"
       :header-cell-style="{ background: '#f6f6f6' }"
-
     >
       <el-table-column type="selection" fixed align="center"></el-table-column>
       <!-- <el-table-column label="序号" prop="id"></el-table-column> -->
@@ -339,10 +337,5 @@ button {
   button:active {
     background-color: #0f0f0f69;
   }
-}
-</style>
-<style lang="scss" scoped>
-:deep(.el-upload--hide .el-upload--picture-card) {
-  display: none;
 }
 </style>
