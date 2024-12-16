@@ -54,8 +54,17 @@ yarn tauri build
   yarn run  tauri build
   src-tauri/tauri.conf.json 中的 endpoints
   目前暂时用github中的处理机制，实际业务可以用自己的服务器进行管理相关应用的升级方法
-  
+https://github.com/user/repo/releases/latest/download/latest.json
+https://api.github.com/repos/huangbin2005/tauri2-app-blank-vue-db/releases/latest
+https://github.com/huangbin2005/tauri2-app-blank-vue-db/releases/latest/download/latest.json
 
+手工创建了json文件
+latest.json 手工上传到git上
+
+联动src-tauri\tauri.conf.json中的配置地址，应该就可以
+
+src-tauri\capabilities\default.json 中的访问地址权限需要加上
+src-tauri\src\lib.rs 中加上plugin
 
 6、代码中开展检查和升级方法处理
 

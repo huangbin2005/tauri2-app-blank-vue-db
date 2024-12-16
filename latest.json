@@ -1,0 +1,11 @@
+{
+    "version": "0.1.1",
+    "notes": "初步版本",
+    "pub_date": "2024-12-16T01:03:05Z",
+    "platforms": {
+      "windows-x86_64": {
+        "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDM0QzZBOEI3MkNGRkI0ODkKUldTSnRQOHN0NmpHTktSc1hXZnBUekZnRUs3ZElHR3lSZVg5Yy9xODlSVENpWnNqaC9hbXdVekkK",
+        "url": "https://github.com/huangbin2005/tauri2-app-blank-vue-db/releases/download/0.1.0tag/tauri2-app-blank-vue-db_0.1.0_x64-setup.exe"
+      }
+    }
+  }

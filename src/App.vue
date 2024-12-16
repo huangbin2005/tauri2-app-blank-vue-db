@@ -16,6 +16,9 @@ import Mock from "mockjs";
 import Database from "@tauri-apps/plugin-sql";
 
 import { fetch } from '@tauri-apps/plugin-http';
+import { check } from '@tauri-apps/plugin-updater'
+import { relaunch } from '@tauri-apps/plugin-process'
+
 
 const editformVisible = ref(false);
 const editformTitle = ref("新增");
@@ -179,10 +182,42 @@ const getRemote =  () => {
   console.log(response); 
 })
 
-;
-
-
 };
+
+const checkVersion=async ()=>{
+  console.log("-------1----")
+  const update = await check();
+  console.log("--------2---")
+
+  if (update) {
+    console.log(
+      `found update ${update.version} from ${update.date} with notes ${update.body}`
+    );
+    let downloaded = 0;
+    let contentLength = 0;
+    // alternatively we could also call update.download() and update.install() separately
+    await update.downloadAndInstall((event) => {
+      switch (event.event) {
+        case 'Started':
+          contentLength = event.data.contentLength;
+          console.log(`started downloading ${event.data.contentLength} bytes`);
+          break;
+        case 'Progress':
+          downloaded += event.data.chunkLength;
+          console.log(`downloaded ${downloaded} from ${contentLength}`);
+          break;
+        case 'Finished':
+          console.log('download finished');
+          break;
+      }
+    });
+
+    console.log('update installed');
+    await relaunch();
+  }
+}
+
+
 
 </script>
 
@@ -227,6 +262,7 @@ const getRemote =  () => {
     <el-button type="success"  round @click="handleAddEdit">新增</el-button>
     <el-button type="success" round @click="fetchDBData">查询数据库</el-button>
     <el-button type="success" round @click="getRemote">查询远端</el-button>
+    <el-button type="success" round @click="checkVersion">检查更新</el-button>
 
     <!-- 表格 -->
     <el-table

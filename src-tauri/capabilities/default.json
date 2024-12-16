@@ -50,9 +50,8 @@
     {
       "identifier": "http:default",
       "allow": [
-        {
-          "url": "https://www.guancha.cn/"
-        }
+        {"url": "https://www.guancha.cn/"},
+        {"url": "https://github.com/"}
       ],
       "deny": [
         {
