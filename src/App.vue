@@ -14,6 +14,9 @@ import {
 } from "@element-plus/icons-vue";
 import Mock from "mockjs";
 import Database from "@tauri-apps/plugin-sql";
+
+import { fetch } from '@tauri-apps/plugin-http';
+
 const editformVisible = ref(false);
 const editformTitle = ref("新增");
 const editformRef = ref(null);
@@ -31,10 +34,10 @@ const editformObj = ref({
 const greetMsg = ref("");
 const name = ref("");
 
-async function greet() {
-  // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  greetMsg.value = await invoke("greet", { name: name.value });
-}
+// async function greet() {
+//   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+//   greetMsg.value = await invoke("greet", { name: name.value });
+// }
 
 let multipleTables = Mock.mock({
   total: 100,
@@ -69,19 +72,27 @@ let multipleTables = Mock.mock({
       ]    },
   ],
 });
+
+// 查询数据库数据
+const fetchDBData = async () => {
+  fetchData();
+};
 // 查询数据库数据
 const fetchData = async () => {
+  isLoading.value = true
+  console.log(isLoading);
   const db = await Database.load("sqlite:Chinook.db");
-  const result = await db.select(
+  const result= await db.select(
     "select id,name as username,email from Employee"
   );
-  console.log(multipleTables.list);
+    console.log(multipleTables.list);
 
-  multipleTables.list = result;
+    multipleTables.list = result;
+    console.log(result);
+    console.log(multipleTables.list);
+    isLoading.value = false
+    console.log(isLoading);
 
-  console.log(result);
-  console.log(multipleTables.list);
-  // handleLoading();
 };
 
 // 插入数据库数据
@@ -156,6 +167,23 @@ const handleSubmit = () => {
     }
   });
 };
+
+
+// 调用远程接口
+const getRemote =  () => {
+  fetch('https://www.guancha.cn/', {
+  method: 'GET',
+}).then(response=>{
+  console.log(response.status); 
+  console.log(response.statusText); 
+  console.log(response); 
+})
+
+;
+
+
+};
+
 </script>
 
 <template>
@@ -197,7 +225,9 @@ const handleSubmit = () => {
       </template>
     </el-drawer>   
     <el-button type="success"  round @click="handleAddEdit">新增</el-button>
-    <el-button type="success" round @click="fetchData">查询数据库</el-button>
+    <el-button type="success" round @click="fetchDBData">查询数据库</el-button>
+    <el-button type="success" round @click="getRemote">查询远端</el-button>
+
     <!-- 表格 -->
     <el-table
       :data="multipleTables.list"

@@ -4,14 +4,87 @@
 
 ## 3、调整相关程序和配置
 
-### 3.5 远程服务调用
+### 3.9 本地数据加密处理机制（以及相关逃生处理机制）
+逃生，例如加密后，忘记密码可以恢复和还原的处理机制
 
+### 3.8 linux处理机制（国产化环境执行处理）
+
+
+### 3.7 文件处理方法
+
+
+#### 3.7.1 本地文件处理（存储、删除、管理等）
+
+#### 3.7.2 文件上下传（互联网文件上下行处理）
+
+
+### 3.6 升级处理
+
+参考 https://tauri.app/plugin/updater/
+```
+1、
+yarn run tauri add updater
+yarn run tauri add process
+2、修改 src-tauri\tauri.conf.json
+----处理以上2步应该可以可以不影响应用启动
+
+3、修改 src-tauri\capabilities\desktop.json 文件
+    补充权限相关配置
+
+4、制作密钥和服务端
+yarn tauri signer generate -w ~/.tauri/tabvdapp.key
+password:1234567890
+linux:
+export TAURI_SIGNING_PRIVATE_KEY="Path or content of your private key"
+# optionally also add a password
+export TAURI_SIGNING_PRIVATE_KEY_PASSWORD=""
+windows:（注意有带着$）
+$env:TAURI_SIGNING_PRIVATE_KEY="D:\source\tauri-app\tauri2-app-blank-vue-db\~\.tauri\tabvdapp.key"
+<# optionally also add a password #>
+$env:TAURI_SIGNING_PRIVATE_KEY_PASSWORD="1234567890"
+
+更新src-tauri\tauri.conf.json
+    "createUpdaterArtifacts": true,
+    updater.pubkey 的内容
+
+yarn tauri build    
+
+
+5、制作升级包和更新服务端
+  yarn run  tauri build
+  src-tauri/tauri.conf.json 中的 endpoints
+  目前暂时用github中的处理机制，实际业务可以用自己的服务器进行管理相关应用的升级方法
+  
+
+
+6、代码中开展检查和升级方法处理
+
+
+```
+
+
+### 3.5 远程服务调用
+```
+参考  https://tauri.app/plugin/http-client/
+1、 npm run tauri add http
+2、 修改src-tauri/capabilities/default.json
+3、 在vue中调用相关地址
+  fetch('https://www.guancha.cn/', {
+  method: 'GET',
+}).then(response=>{
+  console.log(response.status); 
+  console.log(response.statusText); 
+  console.log(response); 
+})
+
+```
 
 ### 3.4 国际化
-多种语言处理机制
+多种语言处理机制,应是vue的功能与能力，暂时不急
+todo
 
 ### 3.3 处理托盘相关内容
-todo
+todo，不是核心紧急功能，暂时不急
 
 ### 3.2 处理数据库相关内容
 ```
@@ -23,7 +96,6 @@ todo
 btw，vite导入相关的
 
 ```
-
 
 ### 3.1 处理基础扩展组件相关内容
 ```

@@ -1,5 +1,5 @@
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-use tauri_plugin_sql::{Migration, MigrationKind};  
+use tauri_plugin_sql::{Migration, MigrationKind};
 
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -10,25 +10,25 @@ mod tray;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    let migrations = vec![
-        Migration {
-            version: 1,  
-            description: "create Employee table",  
-            sql: "CREATE TABLE IF NOT EXISTS Employee (
+    let migrations = vec![Migration {
+        version: 1,
+        description: "create Employee table",
+        sql: "CREATE TABLE IF NOT EXISTS Employee (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 email TEXT
-            )",  
-            kind: MigrationKind::Up,
-        }  
-    ];  
-        // .plugin(tauri_plugin_sql::Builder::new().build())
+            )",
+        kind: MigrationKind::Up,
+    }];
+    // .plugin(tauri_plugin_sql::Builder::new().build())
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_http::init())
         .plugin(
             tauri_plugin_sql::Builder::default()
                 .add_migrations("sqlite:Chinook.db", migrations)
-                .build()
+                .build(),
         )
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_process::init())
