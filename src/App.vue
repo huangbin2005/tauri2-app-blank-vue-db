@@ -18,7 +18,8 @@ import Database from "@tauri-apps/plugin-sql";
 import { fetch } from '@tauri-apps/plugin-http';
 import { check } from '@tauri-apps/plugin-updater'
 import { relaunch } from '@tauri-apps/plugin-process'
-
+import { create,remove, BaseDirectory } from '@tauri-apps/plugin-fs';
+import { upload,download } from '@tauri-apps/plugin-upload';
 
 const editformVisible = ref(false);
 const editformTitle = ref("新增");
@@ -217,7 +218,36 @@ const checkVersion=async ()=>{
   }
 }
 
+const writelocalfile=async ()=>{
+  console.log(BaseDirectory.LocalData)
+  const file = await create('bar.txt', { baseDir: BaseDirectory.AppData });
+  await file.write(new TextEncoder().encode('Hello world------中文处理'));
+  await file.close();
+}
+const delocalfile=async ()=>{
+  await remove('bar.txt', { baseDir: BaseDirectory.AppData });
+}
 
+const downloadfile=async ()=>{
+  download(
+  'https://example.com/file-download-link',
+  './path/to/save/my/file.txt',
+  ({ progress, total }) =>
+    console.log(`Downloaded ${progress} of ${total} bytes`), // a callback that will be called with the download progress
+  { 'Content-Type': 'text/plain' } // optional headers to send with the request
+  );  
+}
+
+
+const uploadfile=async ()=>{
+  upload(
+  'https://example.com/file-upload',
+  './path/to/my/file.txt',
+  ({ progress, total }) =>
+    console.log(`Uploaded ${progress} of ${total} bytes`), // a callback that will be called with the upload progress
+  { 'Content-Type': 'text/plain' } // optional headers to send with the request
+  );
+}
 
 </script>
 
@@ -259,10 +289,12 @@ const checkVersion=async ()=>{
         </div>
       </template>
     </el-drawer>   
-    <el-button type="success"  round @click="handleAddEdit">新增</el-button>
+    <el-button type="success" round @click="handleAddEdit">新增</el-button>
     <el-button type="success" round @click="fetchDBData">查询数据库</el-button>
     <el-button type="success" round @click="getRemote">查询远端</el-button>
     <el-button type="success" round @click="checkVersion">检查更新</el-button>
+    <el-button type="success" round @click="writelocalfile">写一个本地文件</el-button>
+    <el-button type="success" round @click="delocalfile">删除一个本地文件</el-button>
 
     <!-- 表格 -->
     <el-table

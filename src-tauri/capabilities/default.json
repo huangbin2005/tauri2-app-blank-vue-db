@@ -47,6 +47,17 @@
     "sql:allow-close",
     "sql:allow-select",
     "sql:allow-execute",
+    "upload:allow-upload",
+    "upload:allow-download",
+    "fs:default",
+    {
+      "identifier": "fs:allow-app-read-recursive",
+      "allow": [{ "path": "$APPDATA" }, { "path": "$APPDATA/**" }]
+    },
+    {
+      "identifier": "fs:allow-app-write-recursive",
+      "allow": [{ "path": "$APPDATA" }, { "path": "$APPDATA/**" }]
+    },
     {
       "identifier": "http:default",
       "allow": [

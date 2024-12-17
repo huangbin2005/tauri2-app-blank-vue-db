@@ -1,5 +1,5 @@
 # tauri2-app-blank-vue-db
-
+是个白板程序，验证一下tauri的各种功能的可用性，不含业务代码，没有版权问题。
 
 
 ## 3、调整相关程序和配置
@@ -12,11 +12,20 @@
 
 ### 3.7 文件处理方法
 
-
 #### 3.7.1 本地文件处理（存储、删除、管理等）
+```
+yarn run tauri add fs
+src-tauri\tauri.conf.json
+src-tauri\capabilities\default.json 权限管理非常重要
+```
 
 #### 3.7.2 文件上下传（互联网文件上下行处理）
-
+```
+yarn run tauri add upload 增加插件
+src-tauri\capabilities\default.json 权限处理
+src\App.vue，具体上下行处理
+```
+todo 由于暂时没有上传接口，暂时还未测试验证
 
 ### 3.6 升级处理
 
